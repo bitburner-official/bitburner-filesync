@@ -1,0 +1,31 @@
+{
+  "name": "bitburner-remote",
+  "version": "1.0.0",
+  "description": "Official implementation of the Bitburner Remote Server",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hoekstraa/bitburner-remote.git"
+  },
+  "keywords": [
+    "bitburner",
+    "rfa",
+    "remote"
+  ],
+  "author": "Zoë Hoekstra",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/Hoekstraa/bitburner-remote/issues"
+  },
+  "homepage": "https://github.com/Hoekstraa/bitburner-remote#readme",
+  "dependencies": {
+    "cheap-watch": "^1.0.4",
+    "signal-js": "^3.0.1",
+    "ws": "^8.8.1"
+  }
+}
