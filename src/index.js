@@ -1,29 +1,35 @@
 "use strict"
 import { setupWatch } from "./fileWatch.js";
-import * as settings from "./settings.js";
-import { setupSocket } from "./webSocket.js";
+import { config, loadConfig } from "./config.js";
+import { setupSocket } from "./networking/webSocket.js";
 import signal from "signal-js";
-import { fileChangeEventToMsg, fileRemovalEventToMsg, requestDefinitionFile } from "./messageGenerators.js";
+import { fileChangeEventToMsg, fileRemovalEventToMsg, requestDefinitionFile } from "./networking/messageGenerators.js";
+import { EventType } from "./eventTypes.js";
+import { messageHandler } from "./networking/messageHandler.js";
 
-const watch = await setupWatch(signal);
-const socket = setupSocket(signal);
+export async function start() {
+    loadConfig();
+    const watch = await setupWatch(signal);
+    const socket = setupSocket(signal);
 
-signal.on("fileChange", fileEvent => {
-    console.log(fileEvent.path + " changed");
-    signal.emit(EventType.SendMessage, fileChangeEventToMsg(fileEvent))
-});
+    signal.on(EventType.MessageReceived, msg => messageHandler(msg));
 
-if(settings.allowDeletingFiles)
-    signal.on("fileDeletion", fileEvent => 
-        signal.emit(EventType.SendMessage, fileRemovalEventToMsg(fileEvent)));
+    signal.on(EventType.FileChanged, fileEvent => {
+        if (!config.get("quiet")) console.log(fileEvent.path + " changed");
+        signal.emit(EventType.MessageSend, fileChangeEventToMsg(fileEvent))
+    });
 
+    if (config.get("allowDeletingFiles"))
+        signal.on(EventType.FileDeleted, fileEvent =>
+            signal.emit(EventType.MessageSend, fileRemovalEventToMsg(fileEvent)));
 
-console.log(`Server is ready, running on ${settings.port}!`)
+    console.log(`Server is ready, running on ${config.get("port")}!`)
 
-process.on('SIGINT', function() {
-    console.log("Shutting down!");
+    process.on('SIGINT', function () {
+        console.log("Shutting down!");
 
-    watch.close();
-    socket.close();
-    process.exit();
-});
+        watch.close();
+        socket.close();
+        process.exit();
+    });
+}

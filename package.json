@@ -1,9 +1,10 @@
 {
   "name": "bitburner-remote",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "Official implementation of the Bitburner Remote Server",
   "type": "module",
-  "main": "src/index.js",
+  "bin": "./npx/bitburner-remote.js",
+  "main": "./npx/bitburner-remote.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js"
@@ -25,6 +26,7 @@
   "homepage": "https://github.com/Hoekstraa/bitburner-remote#readme",
   "dependencies": {
     "cheap-watch": "^1.0.4",
+    "convict": "^6.2.3",
     "signal-js": "^3.0.1",
     "ws": "^8.8.1"
   }

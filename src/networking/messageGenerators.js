@@ -1,23 +1,24 @@
-import * as fs from "fs";
+import {readFileSync} from "fs";
+import {config} from "../config.js";
+import {join} from "path";
 
 let messageCounter = 0;
 
 export function fileChangeEventToMsg({path}){
-    const message = {
+    return {
         "jsonrpc":"2.0",
         "method":"pushFile",
         "params":{
             "server":"home",
             "filename":path,
-            "content":fs.readFileSync(path).toString()
+            "content":readFileSync(join(config.get("scriptsFolder"), path)).toString()
         },
         "id":messageCounter++
     }
-    return JSON.stringify(message);
 }
 
 export function fileRemovalEventToMsg({path}){
-    const message = {
+    return {
         "jsonrpc":"2.0",
         "method": "deleteFile",
         "params":{
@@ -25,14 +26,12 @@ export function fileRemovalEventToMsg({path}){
         },
         "id":messageCounter++
     }
-    return JSON.stringify(message);
 }
 
 export function requestDefinitionFile(){
-    const message = {
+    return {
         "jsonrpc": "2.0",
         "method": "getDefinitionFile",
         "id":messageCounter++
     }
-    return JSON.stringify(message);
 }
