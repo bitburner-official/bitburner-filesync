@@ -8,8 +8,8 @@ import { fileChangeEventToMsg } from "./messageGenerators.js";
 export function messageHandler(signaller, msg) {
     let incoming;
 
-    try {incoming = JSON.parse(msg.toString());}
-    catch (err) {return console.log(err);}
+    try { incoming = JSON.parse(msg.toString()); }
+    catch (err) { return console.log(err); }
     console.log(incoming)
     if (incoming.id == undefined) return;
 
@@ -26,17 +26,17 @@ export function messageHandler(signaller, msg) {
         if (request.method &&
             request.method == "getFileNames"
             && incoming.result) {
-                const gameFiles = incoming.result.map(file => removeLeadingSlash(file));
+            const gameFiles = incoming.result.map(file => removeLeadingSlash(file));
 
-                watchedFiles().forEach((stats, fileName) => {
-                    if(!stats.isDirectory() && !gameFiles.includes(fileName))
-                        signaller.emit(EventType.MessageSend, fileChangeEventToMsg({path:fileName}));
-                })
-            }
+            watchedFiles().forEach((stats, fileName) => {
+                if (!stats.isDirectory() && !gameFiles.includes(fileName))
+                    signaller.emit(EventType.MessageSend, fileChangeEventToMsg({ path: fileName }));
+            })
+        }
     }
 }
 
-function removeLeadingSlash(path){
+function removeLeadingSlash(path) {
     const reg = /^\//;
     return path.replace(reg, "")
 }
