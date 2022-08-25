@@ -35,3 +35,14 @@ export function requestDefinitionFile(){
         "id":messageCounter++
     }
 }
+
+export function requestFilenames(){
+    return {
+        "jsonrpc": "2.0",
+        "method": "getFileNames",
+        "params": {
+            "server": "home",
+        },
+        "id":messageCounter++
+    }
+}

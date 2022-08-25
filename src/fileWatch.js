@@ -11,13 +11,13 @@ function fileFilter(file) {
     return false;
 }
 
-export async function setupWatch(signaller) {
+const watch = new CheapWatch({
+    dir: config.get("scriptsFolder"),
+    filter: fileFilter,
+    watch: !config.get("dry")
+});
 
-    const watch = new CheapWatch({
-        dir: config.get("scriptsFolder"),
-        filter: fileFilter,
-        watch: !config.get("dry")
-    });
+export async function setupWatch(signaller) {
 
     if(!config.get("quiet")) console.log("Watching folder", resolve(config.get("scriptsFolder")))
 
@@ -30,7 +30,11 @@ export async function setupWatch(signaller) {
    if(config.get("dry")) {
       console.log("Watch would've synchronised:\n", watch.paths)
       process.exit();
-    }
+   }
 
     return watch;
+}
+
+export function watchedFiles() {
+    return watch.paths;
 }

@@ -3,7 +3,7 @@ import { setupWatch } from "./fileWatch.js";
 import { config, loadConfig } from "./config.js";
 import { setupSocket } from "./networking/webSocket.js";
 import signal from "signal-js";
-import { fileChangeEventToMsg, fileRemovalEventToMsg, requestDefinitionFile } from "./networking/messageGenerators.js";
+import { fileChangeEventToMsg, fileRemovalEventToMsg, requestFilenames } from "./networking/messageGenerators.js";
 import { EventType } from "./eventTypes.js";
 import { messageHandler } from "./networking/messageHandler.js";
 
@@ -12,13 +12,28 @@ export async function start() {
     const watch = await setupWatch(signal);
     const socket = setupSocket(signal);
 
-    signal.on(EventType.MessageReceived, msg => messageHandler(msg));
+    // Add a handler for received messages.
+    signal.on(EventType.MessageReceived, msg => messageHandler(signal, msg));
 
+    // Add a handler for when a connection to a game is made.
+    signal.on(EventType.ConnectionMade, () => {
+        console.log("Connection made!");
+
+        if (config.get("definitionFile").update) {
+            signal.emit(EventType.MessageSend, requestDefinitionFile());
+        }
+
+        // Upload missing files to the game.
+        signal.emit(EventType.MessageSend, requestFilenames());
+    })
+
+    // Add a handler for changed files.
     signal.on(EventType.FileChanged, fileEvent => {
         if (!config.get("quiet")) console.log(fileEvent.path + " changed");
         signal.emit(EventType.MessageSend, fileChangeEventToMsg(fileEvent))
     });
 
+    // Add a handler for removed files, if allowed.
     if (config.get("allowDeletingFiles"))
         signal.on(EventType.FileDeleted, fileEvent =>
             signal.emit(EventType.MessageSend, fileRemovalEventToMsg(fileEvent)));

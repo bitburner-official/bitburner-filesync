@@ -23,11 +23,7 @@ export function setupSocket(signaller){
         sendMessage(msg);
       });
 
-      if (config.get("definitionFile").update) {
-        sendMessage(requestDefinitionFile());
-      }
-
-      console.log("Connection made!");
+      signaller.trigger(EventType.ConnectionMade);
     });
 
     return wss;
