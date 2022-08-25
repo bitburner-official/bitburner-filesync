@@ -1,6 +1,6 @@
 {
   "name": "bitburner-filesync",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Official implementation of the Bitburner Filesync server",
   "type": "module",
   "bin": "./npx/bitburner-filesync.js",
@@ -19,6 +19,7 @@
     "remote"
   ],
   "license": "Unlicense",
+  "author": "Zoë Hoekstra",
   "bugs": {
     "url": "https://github.com/bitburner-official/bitburner-filesync/issues"
   },
