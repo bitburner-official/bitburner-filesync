@@ -15,13 +15,14 @@ export async function setupWatch(signaller) {
 
     const watch = new CheapWatch({
         dir: config.get("scriptsFolder"),
-        filter: fileFilter
+        filter: fileFilter,
+        watch: !config.get("dry")
     });
 
     if(!config.get("quiet")) console.log("Watching folder", resolve(config.get("scriptsFolder")))
 
-    watch.on('+', fileEvent => signaller.emit(EventType.FileChanged, fileEvent));
-    watch.on('-', fileEvent => signaller.emit(EventType.FileDeleted, fileEvent));
+    watch.on('+', fileEvent => {if (fileEvent.stats.isFile()) signaller.emit(EventType.FileChanged, fileEvent)});
+    watch.on('-', fileEvent => {if (fileEvent.stats.isFile()) signaller.emit(EventType.FileDeleted, fileEvent)});
 
     // Wait 'till filewatcher is ready to go
     await watch.init();

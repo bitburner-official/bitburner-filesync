@@ -10,7 +10,7 @@ export function fileChangeEventToMsg({path}){
         "method":"pushFile",
         "params":{
             "server":"home",
-            "filename":path,
+            "filename":"/"+path,
             "content":readFileSync(join(config.get("scriptsFolder"), path)).toString()
         },
         "id":messageCounter++
