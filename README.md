@@ -35,6 +35,6 @@ Here's an example of it's contents:
     "update": false,
     "location": "NetScriptDefinitions.d.ts"
   },
-  "pushOnCon": false
+  "pushAllOnConnection": false
 }
 ```

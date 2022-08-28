@@ -23,7 +23,7 @@ export async function start() {
             signal.emit(EventType.MessageSend, requestDefinitionFile());
         }
 
-        if (config.get("pushOnCon")) {
+        if (config.get("pushAllOnConnection")) {
             const extensions = config.get("allowedFiletypes");
             for (const path of watch.paths.keys()) {
                 if (extensions.some(extension => path.endsWith(extension)))

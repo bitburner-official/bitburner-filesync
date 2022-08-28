@@ -53,7 +53,7 @@ export let config = convict({
             default: "./NetScriptDefinitions.d.ts"
         }
     },
-    pushOnCon: {
+    pushAllOnConnection: {
         doc: 'Push all files when initial connection is made.',
         format: 'Boolean',
         env: 'BB_CON_PUSH',
