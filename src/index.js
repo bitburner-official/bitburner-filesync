@@ -25,6 +25,14 @@ export async function start() {
 
         // Upload missing files to the game.
         signal.emit(EventType.MessageSend, requestFilenames());
+
+        if (config.get("pushOnCon")) {
+            const extensions = config.get("allowedFiletypes");
+            for (const path of watch.paths.keys()) {
+                if (extensions.some(extension => path.endsWith(extension)))
+                    signal.emit(EventType.MessageSend, fileChangeEventToMsg({ path: path }))
+            }
+        }
     })
 
     // Add a handler for changed files.
