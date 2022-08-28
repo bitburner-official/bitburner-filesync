@@ -1,11 +1,10 @@
 import { messageTracker } from "./messageTracker.js";
 import { writeFile } from "fs";
 import { config } from "../config.js";
-import { watchedFiles } from "../fileWatch.js";
 import { EventType } from "../eventTypes.js";
 import { fileChangeEventToMsg } from "./messageGenerators.js";
 
-export function messageHandler(signaller, msg) {
+export function messageHandler(signaller, msg, paths) {
     let incoming;
 
     try { incoming = JSON.parse(msg.toString()); }
@@ -15,7 +14,7 @@ export function messageHandler(signaller, msg) {
 
     if (incoming.result) {
         const request = messageTracker.get(incoming.id);
-        if (request.method &&
+        if (request?.method &&
             request.method == "getDefinitionFile"
             && incoming.result) {
             writeFile(config.get("definitionFile").location, incoming.result, (err) => {
@@ -23,12 +22,12 @@ export function messageHandler(signaller, msg) {
             });
         }
 
-        if (request.method &&
+        if (request?.method &&
             request.method == "getFileNames"
             && incoming.result) {
             const gameFiles = incoming.result.map(file => removeLeadingSlash(file));
 
-            watchedFiles().forEach((stats, fileName) => {
+            paths.forEach((stats, fileName) => {
                 if (!stats.isDirectory() && !gameFiles.includes(fileName))
                     signaller.emit(EventType.MessageSend, fileChangeEventToMsg({ path: fileName }));
             })

@@ -13,7 +13,7 @@ export async function start() {
     const socket = setupSocket(signal);
 
     // Add a handler for received messages.
-    signal.on(EventType.MessageReceived, msg => messageHandler(signal, msg));
+    signal.on(EventType.MessageReceived, msg => messageHandler(signal, msg, watch.paths));
 
     // Add a handler for when a connection to a game is made.
     signal.on(EventType.ConnectionMade, () => {
