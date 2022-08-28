@@ -6,7 +6,7 @@ class MessageTracker {
         this.data.set(msg.id, msg);
 
         if (this.data.size > this.#maxLength) {
-            const [firstKey] = map.keys();
+            const [firstKey] = this.data.keys();
             this.data.delete(firstKey);
         }
     }
