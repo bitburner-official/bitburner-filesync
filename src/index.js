@@ -3,7 +3,7 @@ import { setupWatch } from "./fileWatch.js";
 import { config, loadConfig } from "./config.js";
 import { setupSocket } from "./networking/webSocket.js";
 import signal from "signal-js";
-import { fileChangeEventToMsg, fileRemovalEventToMsg, requestFilenames } from "./networking/messageGenerators.js";
+import { fileChangeEventToMsg, fileRemovalEventToMsg, requestFilenames, requestDefinitionFile } from "./networking/messageGenerators.js";
 import { EventType } from "./eventTypes.js";
 import { messageHandler } from "./networking/messageHandler.js";
 
