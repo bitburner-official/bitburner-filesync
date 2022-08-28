@@ -11,7 +11,8 @@ export let config = convict({
     allowDeletingFiles: {
         doc: 'Allow deleting files in game if they get deleted off disk.',
         format: 'Boolean',
-        default: false
+        default: false,
+        arg: 'allowDeletingFiles',
     },
     port: {
         doc: 'The port to bind to.',
@@ -25,19 +26,21 @@ export let config = convict({
         format: 'String',
         default: '.',
         env: 'BB_SCRIPTFOLDER',
-        arg: "folder"
+        arg: 'folder'
     },
     quiet: {
         doc: 'Log less internal events to stdout.',
         format: 'Boolean',
         env: 'BB_VERBOSE',
-        default: false
+        default: false,
+        arg: 'quiet'
     },
     dry: {
         doc: 'Only print the files to be synchronised.',
         format: 'Boolean',
         env: 'BB_DRY',
-        default: false
+        default: false,
+        arg: 'dry'
     },
     definitionFile: {
         update: {
@@ -57,7 +60,8 @@ export let config = convict({
         doc: 'Push all files when initial connection is made.',
         format: 'Boolean',
         env: 'BB_CON_PUSH',
-        default: false
+        default: false,
+        arg: 'pushAllOnConnection'
     }
 });
 
