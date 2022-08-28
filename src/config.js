@@ -52,6 +52,12 @@ export let config = convict({
             env: 'BB_LOCATION_DEF',
             default: "./NetScriptDefinitions.d.ts"
         }
+    },
+    pushAllOnConnection: {
+        doc: 'Push all files when initial connection is made.',
+        format: 'Boolean',
+        env: 'BB_CON_PUSH',
+        default: false
     }
 });
 
