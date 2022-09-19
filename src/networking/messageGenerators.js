@@ -10,7 +10,7 @@ export function fileChangeEventToMsg({ path }) {
         "method": "pushFile",
         "params": {
             "server": "home",
-            "filename": "/" + path,
+            "filename": addLeadingSlash(path),
             "content": readFileSync(join(config.get("scriptsFolder"), path)).toString()
         },
         "id": messageCounter++
@@ -45,4 +45,12 @@ export function requestFilenames() {
         },
         "id": messageCounter++
     }
+}
+
+function addLeadingSlash(path){
+    const slashes = path.match('/');
+    if (slashes)
+        return `/${path}`
+    else
+        return path
 }
