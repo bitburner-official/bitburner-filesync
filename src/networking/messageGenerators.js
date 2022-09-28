@@ -22,6 +22,7 @@ export function fileRemovalEventToMsg({ path }) {
         "jsonrpc": "2.0",
         "method": "deleteFile",
         "params": {
+            "server": "home",
             "filename": path,
         },
         "id": messageCounter++
