@@ -23,7 +23,7 @@ export function fileRemovalEventToMsg({ path }) {
         "method": "deleteFile",
         "params": {
             "server": "home",
-            "filename": path,
+            "filename": addLeadingSlash(path),
         },
         "id": messageCounter++
     }
