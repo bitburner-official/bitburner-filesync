@@ -7,7 +7,8 @@
   "main": "./npx/bitburner-filesync.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "lint": "eslint ./src --fix"
   },
   "repository": {
     "type": "git",
@@ -29,5 +30,13 @@
     "convict": "^6.2.3",
     "signal-js": "^3.0.1",
     "ws": "^8.8.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.8"
   }
 }
