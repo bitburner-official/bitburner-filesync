@@ -1,16 +1,18 @@
+import type { Signal } from 'signal-js';
 import { WebSocketServer } from 'ws';
-import { config } from "../config.js";
-import { EventType } from "../eventTypes.js"
-import { requestDefinitionFile } from './messageGenerators.js';
-import { messageTracker } from "./messageTracker.js"
+import { config } from "../config";
+import { EventType } from "../eventTypes"
+import { Message } from '../interfaces';
+import { requestDefinitionFile } from './messageGenerators';
+import { messageTracker } from "./messageTracker"
 
-export function setupSocket(signaller) {
+export function setupSocket(signaller: Signal) {
 
     const wss = new WebSocketServer({ port: config.get("port") });
 
     wss.on('connection', function connection(ws) {
 
-        function sendMessage(msg) {
+        function sendMessage(msg: Message) {
             messageTracker.push(msg);
             ws.send(JSON.stringify(msg));
         }
@@ -19,7 +21,7 @@ export function setupSocket(signaller) {
             signaller.emit(EventType.MessageReceived, msg);
         });
 
-        signaller.on(EventType.MessageSend, msg => {
+        signaller.on(EventType.MessageSend, (msg: Message) => {
             sendMessage(msg);
         });
 

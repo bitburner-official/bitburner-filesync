@@ -1,9 +1,11 @@
 import CheapWatch from "cheap-watch";
-import { config } from "./config.js";
-import { EventType } from "./eventTypes.js";
+import { config } from "./config";
+import { EventType } from "./eventTypes";
 import { resolve } from "path";
+import type { Signal } from 'signal-js';
+import type { File } from './interfaces';
 
-function fileFilter(file) {
+function fileFilter(file: File) {
     if (config.get("allowedFiletypes").some(extension => file.path.endsWith(extension)))
         return true;
     if (file.stats.isDirectory())
@@ -11,7 +13,7 @@ function fileFilter(file) {
     return false;
 }
 
-export async function setupWatch(signaller) {
+export async function setupWatch(signaller: Signal) {
     const watch = new CheapWatch({
         dir: config.get("scriptsFolder"),
         filter: fileFilter,
