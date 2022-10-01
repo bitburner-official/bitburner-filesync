@@ -1,10 +1,12 @@
-import { messageTracker } from "./messageTracker.js";
-import { writeFile } from "fs";
-import { config } from "../config.js";
-import { EventType } from "../eventTypes.js";
-import { fileChangeEventToMsg } from "./messageGenerators.js";
+import { messageTracker } from "./messageTracker";
+import { Stats, writeFile } from "fs";
+import { config } from "../config";
+import { EventType } from "../eventTypes";
+import { fileChangeEventToMsg } from "./messageGenerators";
+import type { Signal } from 'signal-js';
+import { Message } from '../interfaces';
 
-export function messageHandler(signaller, msg, paths) {
+export function messageHandler(signaller: Signal, msg: Message, paths: Map<string, Stats>) {
     let incoming;
 
     try { incoming = JSON.parse(msg.toString()); }
@@ -25,7 +27,7 @@ export function messageHandler(signaller, msg, paths) {
         if (request?.method &&
             request.method == "getFileNames"
             && incoming.result) {
-            const gameFiles = incoming.result.map(file => removeLeadingSlash(file));
+            const gameFiles = incoming.result.map((file: string) => removeLeadingSlash(file));
 
             paths.forEach((stats, fileName) => {
                 if (!stats.isDirectory() && !gameFiles.includes(fileName))
@@ -35,7 +37,7 @@ export function messageHandler(signaller, msg, paths) {
     }
 }
 
-function removeLeadingSlash(path) {
+function removeLeadingSlash(path: string) {
     const reg = /^\//;
     return path.replace(reg, "")
 }

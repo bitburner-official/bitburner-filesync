@@ -1,10 +1,11 @@
 import { readFileSync } from "fs";
-import { config } from "../config.js";
+import { config } from "../config";
 import { join } from "path";
+import type { FileEvent, Message } from '../interfaces';
 
 let messageCounter = 0;
 
-export function fileChangeEventToMsg({ path }) {
+export function fileChangeEventToMsg({ path }: FileEvent): Message {
     return {
         "jsonrpc": "2.0",
         "method": "pushFile",
@@ -13,11 +14,11 @@ export function fileChangeEventToMsg({ path }) {
             "filename": addLeadingSlash(path),
             "content": readFileSync(join(config.get("scriptsFolder"), path)).toString()
         },
-        "id": messageCounter++
+        "id": (messageCounter++).toString()
     }
 }
 
-export function fileRemovalEventToMsg({ path }) {
+export function fileRemovalEventToMsg({ path }: FileEvent): Message {
     return {
         "jsonrpc": "2.0",
         "method": "deleteFile",
@@ -25,30 +26,30 @@ export function fileRemovalEventToMsg({ path }) {
             "server": "home",
             "filename": addLeadingSlash(path),
         },
-        "id": messageCounter++
+        "id": (messageCounter++).toString()
     }
 }
 
-export function requestDefinitionFile() {
+export function requestDefinitionFile(): Message {
     return {
         "jsonrpc": "2.0",
         "method": "getDefinitionFile",
-        "id": messageCounter++
+        "id": (messageCounter++).toString()
     }
 }
 
-export function requestFilenames() {
+export function requestFilenames(): Message {
     return {
         "jsonrpc": "2.0",
         "method": "getFileNames",
         "params": {
             "server": "home",
         },
-        "id": messageCounter++
+        "id": (messageCounter++).toString()
     }
 }
 
-function addLeadingSlash(path){
+function addLeadingSlash(path: string): string {
     const slashes = path.match('/');
     if (slashes)
         return `/${path}`
