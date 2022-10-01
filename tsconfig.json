@@ -6,7 +6,8 @@
   },
   "include": [
     "src/signals.d.ts",
-    "src/**/*"
+    "src/**/*",
+    "test/**/*"
   ],
   "compilerOptions": {
     /* Basic Options */
