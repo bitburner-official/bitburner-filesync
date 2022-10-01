@@ -3,14 +3,16 @@
   "version": "1.1.5",
   "description": "Official implementation of the Bitburner Filesync server",
   "type": "module",
-  "bin": "./npx/bitburner-filesync.ts",
-  "main": "./npx/bitburner-filesync.ts",
+  "bin": "./dist/npx/bitburner-filesync.js",
+  "main": "./dist/npx/bitburner-filesync.js",
   "scripts": {
+    "build": "tsc --build --verbose --pretty",
+    "clean": "tsc --build --clean",
     "format": "prettier -w .",
     "format:report": "prettier -c .",
     "test:all": "mocha --recursive test",
     "test:single": "mocha",
-    "start": "npx/bitburner-filesync.ts"
+    "start": "ts-node npx/bitburner-filesync.ts"
   },
   "repository": {
     "type": "git",

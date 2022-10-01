@@ -1,0 +1,12 @@
+{
+  "ts-node": {
+    "files": true,
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  },
+  "include": ["test/**/*.spec.ts"],
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true
+  }
+}
