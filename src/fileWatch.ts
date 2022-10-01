@@ -1,6 +1,7 @@
 import CheapWatch from "cheap-watch";
 import { config } from "./config";
 import { EventType } from "./eventTypes";
+import { mkdir } from "fs/promises";
 import { resolve } from "path";
 import type { Signal } from "signal-js";
 import type { File } from "./interfaces";
@@ -11,7 +12,20 @@ function fileFilter(file: File) {
   return false;
 }
 
+function isError(err: unknown): err is NodeJS.ErrnoException {
+  return (err as NodeJS.ErrnoException).code !== undefined;
+}
+
 export async function setupWatch(signaller: Signal) {
+  try {
+    await mkdir(resolve(config.get("scriptsFolder")));
+  } catch (err) {
+    if (isError(err) && err.code !== "EEXIST") {
+      console.log(`Unable to create folder '${config.get("scriptsFolder")}', exiting...`);
+      process.exit();
+    }
+  }
+
   const watch = new CheapWatch({
     dir: config.get("scriptsFolder"),
     filter: fileFilter,
