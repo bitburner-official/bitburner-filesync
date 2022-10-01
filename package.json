@@ -3,12 +3,14 @@
   "version": "1.1.5",
   "description": "Official implementation of the Bitburner Filesync server",
   "type": "module",
-  "bin": "./npx/bitburner-filesync.js",
-  "main": "./npx/bitburner-filesync.js",
+  "bin": "./npx/bitburner-filesync.ts",
+  "main": "./npx/bitburner-filesync.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+
     "format": "prettier -w .",
-    "start": "node src/index.js"
+    "test:all": "mocha --recursive test",
+    "test:single": "mocha",
+    "start": "npx/bitburner-filesync.ts"
   },
   "repository": {
     "type": "git",
@@ -29,9 +31,45 @@
     "cheap-watch": "^1.0.4",
     "convict": "^6.2.3",
     "signal-js": "^3.0.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4",
     "ws": "^8.8.1"
   },
   "devDependencies": {
+
     "prettier": "^2.7.1"
+    "@types/chai": "^4.3.3",
+    "@types/convict": "^6.1.1",
+    "@types/expect": "^24.3.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.7.23",
+    "@types/sinon": "^10.0.13",
+    "@types/sinon-chai": "^3.2.8",
+    "@types/ws": "^8.5.3",
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0",
+    "sinon": "^14.0.0",
+    "sinon-chai": "^3.7.0"
+  },
+  "mocha": {
+    "bail": false,
+    "delay": false,
+    "diff": true,
+    "extension": [
+      "ts"
+    ],
+    "node-option": "loader=ts-node/esm",
+    "parallel": true,
+    "reporter": "spec",
+    "require": [
+      "./test/setup-tests.ts"
+    ],
+    "slow": "75",
+    "timeout": "2000",
+    "ui": "bdd",
+    "watch-files": [
+      "test/**/*.ts"
+    ],
+    "watch-ignore": []
   }
 }
