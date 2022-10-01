@@ -1,4 +1,4 @@
-import type { Stats } from 'fs';
+import type { Stats } from "fs";
 
 export interface Message {
   id: string;
@@ -12,5 +12,5 @@ export interface FileEvent {
 }
 
 export interface File extends FileEvent {
-  stats: Stats
+  stats: Stats;
 }

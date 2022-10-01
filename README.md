@@ -5,7 +5,9 @@ A file synchronisation utility for Bitburner, using the Remote File API.
 It allows players to synchronize scripts and text files from their computer's disk to the game in both the Electron build and website.
 
 ## How to use (for users)
+
 You must have a recent version of `npm` installed after which you can run
+
 ```
 npx bitburner-filesync
 ```

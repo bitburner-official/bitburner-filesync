@@ -1,6 +1,6 @@
-import chai from 'chai';
-import { createSandbox, stub } from 'sinon';
-import sinonChai from 'sinon-chai';
+import chai from "chai";
+import { createSandbox, stub } from "sinon";
+import sinonChai from "sinon-chai";
 
 export async function mochaGlobalSetup() {
   // initial global setup
@@ -27,5 +27,5 @@ export const mochaHooks: Mocha.RootHookObject = {
   afterEach(done: () => void) {
     this.sandbox.restore();
     done();
-  }
-}
+  },
+};

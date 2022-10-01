@@ -1,17 +1,17 @@
-import { setupWatch } from '../src/fileWatch';
-import { expect } from 'chai';
-import { stub, createStubInstance } from 'sinon';
-import CheapWatch from 'cheap-watch';
-import signal from 'signal-js';
+import { setupWatch } from "../src/fileWatch";
+import { expect } from "chai";
+import { stub, createStubInstance } from "sinon";
+import CheapWatch from "cheap-watch";
+import signal from "signal-js";
 
-describe('fileWatch', () => {
-  describe('setupWatch', () => {
-    it('should exist', () => {
+describe("fileWatch", () => {
+  describe("setupWatch", () => {
+    it("should exist", () => {
       expect(setupWatch).to.exist;
     });
 
-    it('should instantiate and initialize CheapWatch', async () => {
-      const consoleStub = stub(console, 'log');
+    it("should instantiate and initialize CheapWatch", async () => {
+      const consoleStub = stub(console, "log");
       const watchInstance = createStubInstance(CheapWatch);
       const watchConstructorStub = stub().returns(watchInstance);
       Object.setPrototypeOf(CheapWatch, watchConstructorStub);
