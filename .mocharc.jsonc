@@ -1,0 +1,15 @@
+{
+  "bail": false,
+  "delay": false,
+  "diff": true,
+  "extension": ["ts"],
+  "node-option": "loader=ts-node/esm",
+  "parallel": true,
+  "reporter": "spec",
+  "require": ["./test/setup-tests.ts"],
+  "slow": "75",
+  "timeout": "2000",
+  "ui": "bdd",
+  "watch-files": ["test/**/*.ts"],
+  "watch-ignore": []
+}
