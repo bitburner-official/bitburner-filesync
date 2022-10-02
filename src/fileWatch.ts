@@ -21,7 +21,7 @@ export async function setupWatch(signaller: Signal) {
     await mkdir(resolve(config.get("scriptsFolder")));
   } catch (err) {
     if (isError(err) && err.code !== "EEXIST") {
-      console.log(`Unable to create folder '${config.get("scriptsFolder")}', exiting...`);
+      console.log(`Failed to watch folder '${config.get("scriptsFolder")}' (${err.code})`);
       process.exit();
     }
   }
