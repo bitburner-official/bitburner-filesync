@@ -1,10 +1,12 @@
 import type { Message } from "../interfaces";
 
 class MessageTracker {
-  data = new Map<string, Message>();
+  data = new Map<number, Message>();
   #maxLength = 200;
 
   push(msg: Message) {
+    if (typeof msg.id !== "number") return;
+
     this.data.set(msg.id, msg);
 
     if (this.data.size > this.#maxLength) {
@@ -13,7 +15,7 @@ class MessageTracker {
     }
   }
 
-  get(index: string) {
+  get(index: number) {
     return this.data.get(index);
   }
 }
