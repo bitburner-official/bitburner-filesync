@@ -14,7 +14,7 @@ export function fileChangeEventToMsg({ path }: FileEvent): Message {
       filename: addLeadingSlash(path),
       content: readFileSync(join(config.get("scriptsFolder"), path)).toString(),
     },
-    id: (messageCounter++).toString(),
+    id: messageCounter++,
   };
 }
 
@@ -26,7 +26,7 @@ export function fileRemovalEventToMsg({ path }: FileEvent): Message {
       server: "home",
       filename: addLeadingSlash(path),
     },
-    id: (messageCounter++).toString(),
+    id: messageCounter++,
   };
 }
 
@@ -34,7 +34,7 @@ export function requestDefinitionFile(): Message {
   return {
     jsonrpc: "2.0",
     method: "getDefinitionFile",
-    id: (messageCounter++).toString(),
+    id: messageCounter++,
   };
 }
 
@@ -45,7 +45,7 @@ export function requestFilenames(): Message {
     params: {
       server: "home",
     },
-    id: (messageCounter++).toString(),
+    id: messageCounter++,
   };
 }
 

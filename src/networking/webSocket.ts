@@ -3,7 +3,6 @@ import { WebSocketServer } from "ws";
 import { config } from "../config";
 import { EventType } from "../eventTypes";
 import { Message } from "../interfaces";
-import { requestDefinitionFile } from "./messageGenerators";
 import { messageTracker } from "./messageTracker";
 
 export function setupSocket(signaller: Signal) {

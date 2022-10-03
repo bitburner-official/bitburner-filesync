@@ -2,6 +2,7 @@ import { setupWatch } from "./fileWatch";
 import { config, loadConfig } from "./config";
 import { setupSocket } from "./networking/webSocket";
 import signal from "signal-js";
+import { RawData } from "ws";
 import {
   fileChangeEventToMsg,
   fileRemovalEventToMsg,
@@ -10,7 +11,7 @@ import {
 } from "./networking/messageGenerators";
 import { EventType } from "./eventTypes";
 import { messageHandler } from "./networking/messageHandler";
-import { FileEvent, Message } from "./interfaces";
+import { FileEvent } from "./interfaces";
 
 export async function start() {
   loadConfig();
@@ -18,7 +19,7 @@ export async function start() {
   const socket = setupSocket(signal);
 
   // Add a handler for received messages.
-  signal.on(EventType.MessageReceived, (msg: Message) => messageHandler(signal, msg, watch.paths));
+  signal.on(EventType.MessageReceived, (msg: RawData) => messageHandler(signal, msg, watch.paths));
 
   // Add a handler for when a connection to a game is made.
   signal.on(EventType.ConnectionMade, () => {
