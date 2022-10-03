@@ -7,38 +7,39 @@ import { fileChangeEventToMsg } from "./messageGenerators";
 import type { Signal } from "signal-js";
 import { Message } from "../interfaces";
 
-function deserialize(data: RawData): Message | void {
-  let msg;
+function deserialize(data: RawData): Message {
+  const msg = JSON.parse(data.toString());
 
-  try {
-    msg = JSON.parse(data.toString());
-  } catch (err) {
-    return console.log(err);
+  if (typeof msg.jsonrpc !== "string" || msg.jsonrpc !== "2.0" || typeof msg.id !== "number") {
+    throw Error("Malformed data received.");
   }
-
-  if (typeof msg.jsonrpc !== "string" || msg.jsonrpc !== "2.0" || typeof msg.id !== "number") return;
 
   const id: number = msg.id;
   const request = messageTracker.get(id);
 
-  if (typeof request?.method !== "string") return;
-  else if (msg.error != null) return { jsonrpc: "2.0", error: msg.error, id };
-  else if (msg.result == null) return;
+  if (typeof request?.method !== "string") {
+    throw Error("Malformed JSON received.");
+  } else if (msg.error != null) {
+    throw Error(msg.error);
+  } else if (msg.result == null) {
+    throw Error("Malformed JSON received.");
+  }
 
   return { jsonrpc: "2.0", method: request.method, result: msg.result, id };
 }
 
-function isStringArray(s: Array<unknown>): s is string[] {
+export function isStringArray(s: Array<unknown>): s is string[] {
   return s.every((s) => typeof s === "string");
 }
 
 export function messageHandler(signaller: Signal, data: RawData, paths: Map<string, Stats>) {
-  const incoming = deserialize(data);
+  let incoming;
 
-  if (incoming == null) {
-    return console.log("Malformed data received.");
-  } else if (incoming.error) {
-    return console.log(incoming.error);
+  try {
+    incoming = deserialize(data);
+  } catch (err) {
+    if (err instanceof Error) return console.log(err.message);
+    else throw err;
   }
 
   switch (incoming.method) {
