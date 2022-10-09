@@ -31,5 +31,5 @@ describe("messageTracker", () => {
     expect(msg0).to.eq(undefined);
     expect(msg1?.result).to.eq("testvalue1");
     expect(msg200?.result).to.eq("testvalue200");
-  })
+  });
 });
