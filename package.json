@@ -10,7 +10,7 @@
     "clean": "tsc --build --clean",
     "format": "prettier -w .",
     "format:report": "prettier -c .",
-    "test:all": "mocha --recursive test",
+    "test:all": "tsc && nyc mocha --recursive test",
     "test:single": "mocha",
     "start": "ts-node npx/bitburner-filesync.ts"
   },
@@ -33,12 +33,11 @@
     "cheap-watch": "^1.0.4",
     "convict": "^6.2.3",
     "signal-js": "^3.0.1",
-    "ts-node": "^10.9.1",
     "typescript": "^4.8.4",
     "ws": "^8.8.1"
   },
   "devDependencies": {
-    "prettier": "^2.7.1",
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "@types/chai": "^4.3.3",
     "@types/convict": "^6.1.1",
     "@types/expect": "^24.3.0",
@@ -49,7 +48,11 @@
     "@types/ws": "^8.5.3",
     "chai": "^4.3.6",
     "mocha": "^10.0.0",
+    "nyc": "^15.1.0",
+    "prettier": "^2.7.1",
     "sinon": "^14.0.0",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^3.7.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1"
   }
 }

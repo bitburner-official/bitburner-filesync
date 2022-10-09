@@ -2,7 +2,8 @@
   "ts-node": {
     "files": true,
     "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "experimentalSpecifierResolution": "node",
+    "sourceMap": true
   },
   "include": ["src/signals.d.ts", "src/**/*", "npx/**/*"],
   "extends": "./tsconfig.base.json"
