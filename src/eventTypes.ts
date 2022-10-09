@@ -1,7 +1,7 @@
-export class EventType {
-  static ConnectionMade = "ConnectionMade";
-  static FileChanged = "FileChanged";
-  static FileDeleted = "FileDeleted";
-  static MessageReceived = "MessageReceived";
-  static MessageSend = "MessageSend";
+export enum EventType {
+  ConnectionMade,
+  FileChanged,
+  FileDeleted,
+  MessageReceived,
+  MessageSend
 }
