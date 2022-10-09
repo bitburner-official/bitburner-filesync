@@ -3,5 +3,5 @@ export enum EventType {
   FileChanged,
   FileDeleted,
   MessageReceived,
-  MessageSend
+  MessageSend,
 }
