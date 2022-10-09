@@ -49,6 +49,17 @@ export function requestFilenames(): Message {
   };
 }
 
+export function requestAllFiles(): Message {
+  return {
+    jsonrpc: "2.0",
+    method: "getAllFiles",
+    params: {
+      server: "home",
+    },
+    id: messageCounter++,
+  };
+}
+
 function addLeadingSlash(path: string): string {
   const slashes = path.match("/");
   if (slashes) return `/${path}`;

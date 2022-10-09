@@ -63,6 +63,13 @@ export let config = convict({
     default: false,
     arg: "pushAllOnConnection",
   },
+  disableWatch: {
+    doc: "Disable everything besides push/pulling through the external calls.",
+    format: "Boolean",
+    env: "BB_MANUAL",
+    default: false,
+    arg: "manual",
+  },
 });
 
 export function loadConfig() {
