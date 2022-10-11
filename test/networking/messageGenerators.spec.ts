@@ -37,7 +37,7 @@ describe("messageGenerators", () => {
       const msg = fileRemovalEventToMsg({ path: "sub/test.js" });
       const result = (msg?.params as FileData).filename;
 
-      if (result && result.hasOwnProperty("filename")) expect(result).to.eq("/sub/test.js");
+      if (result && Object.prototype.hasOwnProperty.call(result, "filename")) expect(result).to.eq("/sub/test.js");
     });
   });
 
@@ -46,7 +46,7 @@ describe("messageGenerators", () => {
       const msg = fileRemovalEventToMsg({ path: "test.js" });
       const result = (msg?.params as FileData).filename;
 
-      if (result && result.hasOwnProperty("filename")) expect(result).to.eq("test.js");
+      if (result && Object.prototype.hasOwnProperty.call(result, "filename")) expect(result).to.eq("test.js");
     });
   });
 
@@ -55,7 +55,7 @@ describe("messageGenerators", () => {
       const msg = fileRemovalEventToMsg({ path: "/sub/test.js" });
       const result = (msg?.params as FileData).filename;
 
-      if (result && result.hasOwnProperty("filename")) expect(result).to.eq("/sub/test.js");
+      if (result && Object.prototype.hasOwnProperty.call(result, "filename")) expect(result).to.eq("/sub/test.js");
     });
   });
 });
