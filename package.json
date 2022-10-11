@@ -10,6 +10,7 @@
     "clean": "tsc --build --clean",
     "format": "prettier -w .",
     "format:report": "prettier -c .",
+    "lint": "eslint . --ext .ts",
     "test:all": "tsc && nyc mocha --recursive test",
     "test:single": "mocha",
     "start": "ts-node npx/bitburner-filesync.ts"
