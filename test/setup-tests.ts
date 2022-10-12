@@ -1,5 +1,5 @@
 import chai from "chai";
-import { createSandbox, stub } from "sinon";
+import { createSandbox } from "sinon";
 import sinonChai from "sinon-chai";
 
 export async function mochaGlobalSetup() {

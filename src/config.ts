@@ -2,7 +2,7 @@ import convict from "convict";
 import { existsSync } from "fs";
 
 // Define a schema
-export let config = convict({
+export const config = convict({
   allowedFiletypes: {
     doc: "Filetypes that are synchronized to the game.",
     format: "Array",

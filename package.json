@@ -10,6 +10,7 @@
     "clean": "tsc --build --clean",
     "format": "prettier -w .",
     "format:report": "prettier -c .",
+    "lint": "eslint . --ext .ts",
     "test:all": "tsc && nyc mocha --recursive test",
     "test:single": "mocha",
     "start": "ts-node npx/bitburner-filesync.ts"
@@ -46,7 +47,10 @@
     "@types/sinon": "^10.0.13",
     "@types/sinon-chai": "^3.2.8",
     "@types/ws": "^8.5.3",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
     "chai": "^4.3.6",
+    "eslint": "^8.25.0",
     "mocha": "^10.0.0",
     "nyc": "^15.1.0",
     "prettier": "^2.7.1",
