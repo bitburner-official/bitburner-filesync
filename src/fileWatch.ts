@@ -1,11 +1,10 @@
 import CheapWatch from "cheap-watch";
 import { config } from "./config";
 import { EventType } from "./eventTypes";
-import { mkdir } from "fs/promises";
+import { mkdir, readdir } from "fs/promises";
 import { resolve } from "path";
 import type { Signal } from "signal-js";
 import type { File } from "./interfaces";
-import fs from "node:fs";
 
 function isError(err: unknown): err is NodeJS.ErrnoException {
   return (err as NodeJS.ErrnoException).code !== undefined;
@@ -21,13 +20,13 @@ export async function setupWatch(signaller: Signal) {
     }
   }
 
-  const excludedPaths = config.get("exclude").map((path) => resolve(path));
-  const excludedFiles = new Set<string>();
-  for (const excludedPath of excludedPaths) {
-    for (const excludedFile of fs.readdirSync(excludedPath)) {
-      excludedFiles.add(excludedFile);
-    }
-  }
+  const promises = config.get("exclude")
+    .map(path => readdir(resolve(path)).catch(err => {
+      console.log(`Failed to excluded item ${path}: ${err}`);
+      return [];
+    }));
+  const excludedFiles = new Set(await Promise.all(promises)
+    .then(lists => lists.flat()));
 
   const fileFilter = (file: File) => {
     // If the file is excluded, skip all other checks and ignore it.
