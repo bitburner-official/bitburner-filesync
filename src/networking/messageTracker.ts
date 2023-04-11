@@ -1,4 +1,4 @@
-import type { Message } from "../interfaces";
+import type { Message } from "../interfaces.js";
 
 class MessageTracker {
   data = new Map<number, Message>();

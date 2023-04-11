@@ -1,6 +1,6 @@
-import { setupWatch } from "./fileWatch";
-import { config, loadConfig } from "./config";
-import { setupSocket } from "./networking/webSocket";
+import { setupWatch } from "./fileWatch.js";
+import { config, loadConfig } from "./config.js";
+import { setupSocket } from "./networking/webSocket.js";
 import signal from "signal-js";
 import { RawData } from "ws";
 import {
