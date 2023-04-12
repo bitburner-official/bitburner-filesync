@@ -8,10 +8,10 @@ import {
   fileRemovalEventToMsg,
   requestFilenames,
   requestDefinitionFile,
-} from "./networking/messageGenerators";
-import { EventType } from "./eventTypes";
-import { messageHandler } from "./networking/messageHandler";
-import { FileEvent } from "./interfaces";
+} from "./networking/messageGenerators.js";
+import { EventType } from "./eventTypes.js";
+import { messageHandler } from "./networking/messageHandler.js";
+import { FileEvent } from "./interfaces.js";
 
 export async function start() {
   loadConfig();
