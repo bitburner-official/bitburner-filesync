@@ -1,6 +1,6 @@
 import CheapWatch from "cheap-watch";
-import { config } from "./config";
-import { EventType } from "./eventTypes";
+import { config } from "./config.js";
+import { EventType } from "./eventTypes.js";
 import { mkdir, readdir } from "fs/promises";
 import { resolve } from "path";
 import type { Signal } from "signal-js";
