@@ -1,10 +1,32 @@
 import CheapWatch from "cheap-watch";
 import { config } from "./config.js";
 import { EventType } from "./eventTypes.js";
-import { mkdir, readdir } from "fs/promises";
-import { resolve } from "path";
+import { mkdir } from "fs/promises";
+import { resolve, relative, isAbsolute } from "path";
 import type { Signal } from "signal-js";
 import type { File } from "./interfaces.js";
+
+/**
+ * Returns true if the given file should be watched.
+ * @param file The provided file.
+ */
+function fileFilter(file: File) {
+  // If the file is excluded, skip all other checks and ignore it.
+  if (config.get("exclude").some(x => isSubDirOf(file.path, x))) return false;
+  if (config.get("allowedFiletypes").some((extension) => file.path.endsWith(extension))) return true;
+  if (file.stats.isDirectory()) return true;
+  return false;
+}
+
+/**
+ * Returns true if a directory is a subdirectory of a parent directory (not necessarily strict).
+ * @param dir The directory to perform the check on.
+ * @param parent The parent directory.
+ */
+function isSubDirOf(dir: string, parent: string) {
+  const relPath = relative(resolve(parent), resolve(dir));
+  return !!relPath && !relPath.startsWith('..') && !isAbsolute(relPath);
+}
 
 function isError(err: unknown): err is NodeJS.ErrnoException {
   return (err as NodeJS.ErrnoException).code !== undefined;
@@ -19,22 +41,6 @@ export async function setupWatch(signaller: Signal) {
       process.exit();
     }
   }
-
-  const promises = config.get("exclude")
-    .map(path => readdir(resolve(path)).catch(err => {
-      console.log(`Failed to excluded item ${path}: ${err}`);
-      return [];
-    }));
-  const excludedFiles = new Set(await Promise.all(promises)
-    .then(lists => lists.flat()));
-
-  const fileFilter = (file: File) => {
-    // If the file is excluded, skip all other checks and ignore it.
-    if (excludedFiles.has(file.path)) return false;
-    if (config.get("allowedFiletypes").some((extension) => file.path.endsWith(extension))) return true;
-    if (file.stats.isDirectory()) return true;
-    return false;
-  };
 
   const watch = new CheapWatch({
     dir: config.get("scriptsFolder"),
