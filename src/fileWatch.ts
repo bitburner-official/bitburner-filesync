@@ -7,6 +7,16 @@ import type { Signal } from "signal-js";
 import type { File } from "./interfaces.js";
 
 /**
+ * Returns true if a directory is a subdirectory of a parent directory (not necessarily strict).
+ * @param dir The directory to perform the check on.
+ * @param parent The parent directory.
+ */
+function isSubDirOf(dir: string, parent: string) {
+  const relPath = relative(resolve(parent), resolve(dir));
+  return !!relPath && !relPath.startsWith('..') && !isAbsolute(relPath);
+}
+
+/**
  * Returns true if the given file should be watched.
  * @param file The provided file.
  */
@@ -19,19 +29,17 @@ function fileFilter(file: File) {
 }
 
 /**
- * Returns true if a directory is a subdirectory of a parent directory (not necessarily strict).
- * @param dir The directory to perform the check on.
- * @param parent The parent directory.
+ * Type guard for {@code NodeJS.ErrnoException}.
+ * @param err
  */
-function isSubDirOf(dir: string, parent: string) {
-  const relPath = relative(resolve(parent), resolve(dir));
-  return !!relPath && !relPath.startsWith('..') && !isAbsolute(relPath);
-}
-
 function isError(err: unknown): err is NodeJS.ErrnoException {
   return (err as NodeJS.ErrnoException).code !== undefined;
 }
 
+/**
+ * Sets up the file watch.
+ * @param signaller The signal event emitter.
+ */
 export async function setupWatch(signaller: Signal) {
   try {
     await mkdir(resolve(config.get("scriptsFolder")));

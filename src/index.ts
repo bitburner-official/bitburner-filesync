@@ -13,6 +13,9 @@ import { EventType } from "./eventTypes.js";
 import { messageHandler } from "./networking/messageHandler.js";
 import { FileEvent } from "./interfaces.js";
 
+/**
+ * Starts the file watcher.
+ */
 export async function start() {
   loadConfig();
   const watch = await setupWatch(signal);
