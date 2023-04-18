@@ -13,7 +13,7 @@ import type { File } from "./interfaces.js";
  */
 function isSubDirOf(dir: string, parent: string) {
   const relPath = relative(resolve(parent), resolve(dir));
-  return !!relPath && !relPath.startsWith('..') && !isAbsolute(relPath);
+  return !!relPath && !relPath.startsWith("..") && !isAbsolute(relPath);
 }
 
 /**
@@ -22,7 +22,7 @@ function isSubDirOf(dir: string, parent: string) {
  */
 function fileFilter(file: File) {
   // If the file is excluded, skip all other checks and ignore it.
-  if (config.get("exclude").some(x => isSubDirOf(file.path, x))) return false;
+  if (config.get("exclude").some((x) => isSubDirOf(file.path, x))) return false;
   if (config.get("allowedFiletypes").some((extension) => file.path.endsWith(extension))) return true;
   if (file.stats.isDirectory()) return true;
   return false;
