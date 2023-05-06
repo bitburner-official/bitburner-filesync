@@ -1,0 +1,21 @@
+{
+    "allowedFiletypes": [
+      ".js"      
+    ],
+    "allowDeletingFiles": true,
+    "port": 12525,
+    "scriptsFolder": "c:\\git\\bitburner\\out",
+    "quiet": false,
+    "dry": false,
+    "definitionFile": {
+      "update": true,
+      "location": "NetScriptDefinitions.d.ts"
+    },
+    "logFiles": { 
+        "update": true,
+        "interval": 1,
+        "remoteLocation": "/logs/",
+        "localLocation": "D:\\bitburner_game_logs"
+    },    
+    "pushAllOnConnection": true
+  }

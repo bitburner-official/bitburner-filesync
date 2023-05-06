@@ -1,4 +1,4 @@
-import { setupWatch } from "./fileWatch";
+import { setupWatch, setupLogsFolder } from "./fileWatch";
 import { config, loadConfig } from "./config";
 import { setupSocket } from "./networking/webSocket";
 import signal from "signal-js";
@@ -8,21 +8,26 @@ import {
   fileRemovalEventToMsg,
   requestFilenames,
   requestDefinitionFile,
+  getAllFiles
 } from "./networking/messageGenerators";
 import { EventType } from "./eventTypes";
 import { messageHandler } from "./networking/messageHandler";
 import { FileEvent } from "./interfaces";
+import { TIMEOUT } from "dns";
 
 export async function start() {
   loadConfig();
   const watch = await setupWatch(signal);
   const socket = setupSocket(signal);
+  let isConnected: boolean = false;
 
+  await setupLogsFolder();
   // Add a handler for received messages.
-  signal.on(EventType.MessageReceived, (msg: RawData) => messageHandler(signal, msg, watch.paths));
+  signal.on(EventType.MessageReceived, (msg: RawData) => messageHandler(signal, msg, watch.paths, config.get("logFiles").update, config.get("logFiles").remoteLocation, config.get("logFiles").localLocation));
 
   // Add a handler for when a connection to a game is made.
   signal.on(EventType.ConnectionMade, () => {
+    isConnected = true;
     console.log("Connection made!");
 
     if (config.get("definitionFile").update) {
@@ -62,4 +67,14 @@ export async function start() {
     socket.close();
     process.exit();
   });
+
+  if (config.get("logFiles").update) {
+    while(true) {
+      if ((isConnected as boolean) === true) {   
+        signal.emit(EventType.MessageSend, getAllFiles());        
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, config.get("logFiles").interval * 1000));
+    }
+  }
 }

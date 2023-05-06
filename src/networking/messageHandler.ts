@@ -5,7 +5,7 @@ import { config } from "../config";
 import { EventType } from "../eventTypes";
 import { fileChangeEventToMsg } from "./messageGenerators";
 import type { Signal } from "signal-js";
-import { Message } from "../interfaces";
+import { Message, FileContent } from "../interfaces";
 
 function deserialize(data: RawData): Message {
   const msg = JSON.parse(data.toString());
@@ -32,7 +32,12 @@ export function isStringArray(s: Array<unknown>): s is string[] {
   return s.every((s) => typeof s === "string");
 }
 
-export function messageHandler(signaller: Signal, data: RawData, paths: Map<string, Stats>) {
+export function messageHandler(signaller: Signal, 
+  data: RawData, 
+  paths: Map<string, Stats>, 
+  updateLogs: boolean,
+  remoteLogFolder: string, 
+  localLogFolder: string) {
   let incoming;
 
   try {
@@ -62,6 +67,26 @@ export function messageHandler(signaller: Signal, data: RawData, paths: Map<stri
           signaller.emit(EventType.MessageSend, fileChangeEventToMsg({ path: fileName }));
       });
     }
+
+    break;
+    case "getAllFiles": 
+      if (!Array.isArray(incoming.result))
+        return console.log("Malformed data received.");
+      
+      if (updateLogs) {
+        let results: FileContent[] = (incoming.result as FileContent[])
+
+        for (let result of results) {
+          if (result.filename.startsWith(remoteLogFolder)) {
+            let localFileName = result.filename.replace(remoteLogFolder, "").replace("/", "_");
+            writeFile(localLogFolder + "\\" + localFileName, result.content, (err) => {
+              if (err) return console.log(err);
+            });
+          }
+        }
+      }
+          
+    break;
   }
 }
 

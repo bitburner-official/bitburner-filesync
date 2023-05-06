@@ -12,6 +12,17 @@ function fileFilter(file: File) {
   return false;
 }
 
+export async function setupLogsFolder() {
+  try {
+    await mkdir(resolve(config.get("logFiles").localLocation));
+  } catch (err) {
+    if (isError(err) && err.code !== "EEXIST") {
+      console.log(`Failed to create folder '${config.get("logFiles").localLocation}' (${err.code})`);
+      process.exit();
+    }
+  }
+}
+
 function isError(err: unknown): err is NodeJS.ErrnoException {
   return (err as NodeJS.ErrnoException).code !== undefined;
 }

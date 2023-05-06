@@ -42,6 +42,32 @@ export const config = convict({
     default: false,
     arg: "dry",
   },
+  logFiles: { 
+    update: { 
+      doc: "Automatically pull the log files from the game.",
+      format: "Boolean",
+      env: "BB_UPDATE_LOG",
+      default: false
+    },
+    interval: {
+      doc: "Interval in seconds to pull log files from the game.",
+      format: "Number",
+      env: "BB_UPDATE_LOG_INTERVAL",
+      default: 5
+    },
+    remoteLocation: {
+      doc: "Folder where log files are stored in the game.",
+      format: "String",
+      env: "BB_LOCATION_LOG",
+      default: "/logs"
+    },
+    localLocation: {
+      doc: "Folder where log files are stored locally.",
+      format: "String",
+      env: "BB_LOCATION_LOG_LOCAL",
+      default: "./logs"
+    }    
+  },
   definitionFile: {
     update: {
       doc: "Automatically pull the definition file from the game.",
