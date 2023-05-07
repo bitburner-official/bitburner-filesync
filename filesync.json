@@ -13,7 +13,7 @@
     },
     "logFiles": { 
         "update": true,
-        "interval": 1,
+        "interval": 30,
         "remoteLocation": "/logs/",
         "localLocation": "D:\\bitburner_game_logs"
     },    

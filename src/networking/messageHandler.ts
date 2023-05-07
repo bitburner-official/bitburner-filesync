@@ -32,13 +32,14 @@ export function isStringArray(s: Array<unknown>): s is string[] {
   return s.every((s) => typeof s === "string");
 }
 
-export function messageHandler(signaller: Signal, 
-  data: RawData, 
-  paths: Map<string, Stats>, 
-  updateLogs: boolean,
-  remoteLogFolder: string, 
-  localLogFolder: string) {
+export function messageHandler(signaller: Signal, data: RawData, paths: Map<string, Stats>) {
+
+  let updateLogs: boolean = config.get("logFiles").update;
+  let remoteLogFolder: string = config.get("logFiles").remoteLocation;
+  let localLogFolder: string = config.get("logFiles").localLocation;
+
   let incoming;
+
 
   try {
     incoming = deserialize(data);
@@ -85,7 +86,7 @@ export function messageHandler(signaller: Signal,
           }
         }
       }
-          
+
     break;
   }
 }

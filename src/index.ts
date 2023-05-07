@@ -1,4 +1,4 @@
-import { setupWatch, setupLogsFolder } from "./fileWatch";
+import { setupWatch, monitorLogs } from "./fileWatch";
 import { config, loadConfig } from "./config";
 import { setupSocket } from "./networking/webSocket";
 import signal from "signal-js";
@@ -20,10 +20,9 @@ export async function start() {
   const watch = await setupWatch(signal);
   const socket = setupSocket(signal);
   let isConnected: boolean = false;
-
-  await setupLogsFolder();
+  
   // Add a handler for received messages.
-  signal.on(EventType.MessageReceived, (msg: RawData) => messageHandler(signal, msg, watch.paths, config.get("logFiles").update, config.get("logFiles").remoteLocation, config.get("logFiles").localLocation));
+  signal.on(EventType.MessageReceived, (msg: RawData) => messageHandler(signal, msg, watch.paths));
 
   // Add a handler for when a connection to a game is made.
   signal.on(EventType.ConnectionMade, () => {
@@ -68,13 +67,5 @@ export async function start() {
     process.exit();
   });
 
-  if (config.get("logFiles").update) {
-    while(true) {
-      if ((isConnected as boolean) === true) {   
-        signal.emit(EventType.MessageSend, getAllFiles());        
-      }
-
-      await new Promise((resolve) => setTimeout(resolve, config.get("logFiles").interval * 1000));
-    }
-  }
+  await monitorLogs(signal);  
 }

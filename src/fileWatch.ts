@@ -3,6 +3,7 @@ import { config } from "./config";
 import { EventType } from "./eventTypes";
 import { mkdir } from "fs/promises";
 import { resolve } from "path";
+import { getAllFiles } from "./networking/messageGenerators";
 import type { Signal } from "signal-js";
 import type { File } from "./interfaces";
 
@@ -19,6 +20,17 @@ export async function setupLogsFolder() {
     if (isError(err) && err.code !== "EEXIST") {
       console.log(`Failed to create folder '${config.get("logFiles").localLocation}' (${err.code})`);
       process.exit();
+    }
+  }
+}
+
+export async function monitorLogs(signaller: Signal)
+{  
+  if (config.get("logFiles").update) {
+    await setupLogsFolder();
+    while(true) {
+      signaller.emit(EventType.MessageSend, getAllFiles());              
+      await new Promise((resolve) => setTimeout(resolve, config.get("logFiles").interval * 1000));
     }
   }
 }
