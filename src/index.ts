@@ -1,6 +1,6 @@
-import { setupWatch } from "./fileWatch";
-import { config, loadConfig } from "./config";
-import { setupSocket } from "./networking/webSocket";
+import { setupWatch } from "./fileWatch.js";
+import { config, loadConfig } from "./config.js";
+import { setupSocket } from "./networking/webSocket.js";
 import signal from "signal-js";
 import { RawData } from "ws";
 import {
@@ -8,11 +8,14 @@ import {
   fileRemovalEventToMsg,
   requestFilenames,
   requestDefinitionFile,
-} from "./networking/messageGenerators";
-import { EventType } from "./eventTypes";
-import { messageHandler } from "./networking/messageHandler";
-import { FileEvent } from "./interfaces";
+} from "./networking/messageGenerators.js";
+import { EventType } from "./eventTypes.js";
+import { messageHandler } from "./networking/messageHandler.js";
+import { FileEvent } from "./interfaces.js";
 
+/**
+ * Starts the file watcher.
+ */
 export async function start() {
   loadConfig();
   const watch = await setupWatch(signal);

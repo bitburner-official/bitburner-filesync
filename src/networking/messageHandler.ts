@@ -1,11 +1,11 @@
-import { messageTracker } from "./messageTracker";
+import { messageTracker } from "./messageTracker.js";
 import { Stats, writeFile } from "fs";
 import { RawData } from "ws";
-import { config } from "../config";
-import { EventType } from "../eventTypes";
-import { fileChangeEventToMsg } from "./messageGenerators";
+import { config } from "../config.js";
+import { EventType } from "../eventTypes.js";
+import { fileChangeEventToMsg } from "./messageGenerators.js";
 import type { Signal } from "signal-js";
-import { Message } from "../interfaces";
+import { Message } from "../interfaces.js";
 
 function deserialize(data: RawData): Message {
   const msg = JSON.parse(data.toString());

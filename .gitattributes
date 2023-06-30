@@ -1,0 +1,26 @@
+# js / ts files
+*.js               text
+*.ts               text
+
+# Config text files
+*.jsonc            text
+*.json             text
+*.yml              text
+.eslintrc          text
+.eslintignore      text
+.gitignore         text
+.gitattributes     text
+.prettierignore    text
+.prettierrc        text
+
+# Standard text files
+*.txt              text
+*.md               text
+*.sh               text eol=lf
+*.bat              text eol=crlf
+LICENSE            text
+
+# Binary files
+*.gif              binary
+*.jpg              binary
+*.png              binary

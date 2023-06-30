@@ -28,6 +28,11 @@ export const config = convict({
     env: "BB_SCRIPTFOLDER",
     arg: "folder",
   },
+  exclude: {
+    doc: "A list of folders or files to exclude from the sync.",
+    format: "Array",
+    default: [".vscode", ".idea", ".github"],
+  },
   quiet: {
     doc: "Log less internal events to stdout.",
     format: "Boolean",

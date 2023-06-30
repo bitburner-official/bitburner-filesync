@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
-import { config } from "../config";
+import { config } from "../config.js";
 import { join } from "path";
-import type { FileEvent, Message } from "../interfaces";
+import type { FileEvent, Message } from "../interfaces.js";
 
 let messageCounter = 0;
 

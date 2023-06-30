@@ -1,9 +1,9 @@
 import type { Signal } from "signal-js";
 import { WebSocketServer } from "ws";
-import { config } from "../config";
-import { EventType } from "../eventTypes";
-import { Message } from "../interfaces";
-import { messageTracker } from "./messageTracker";
+import { config } from "../config.js";
+import { EventType } from "../eventTypes.js";
+import { Message } from "../interfaces.js";
+import { messageTracker } from "./messageTracker.js";
 
 export function setupSocket(signaller: Signal) {
   const wss = new WebSocketServer({ port: config.get("port") });

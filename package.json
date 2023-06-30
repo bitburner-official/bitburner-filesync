@@ -6,6 +6,7 @@
   "bin": "./dist/npx/bitburner-filesync.js",
   "main": "./dist/npx/bitburner-filesync.js",
   "scripts": {
+    "prepare": "npm run build",
     "build": "tsc --build --verbose --pretty",
     "clean": "tsc --build --clean",
     "format": "prettier -w .",
@@ -32,7 +33,7 @@
   "homepage": "https://github.com/bitburner-official/bitburner-filesync#readme",
   "dependencies": {
     "cheap-watch": "^1.0.4",
-    "convict": "^6.2.3",
+    "convict": "^6.2.4",
     "signal-js": "^3.0.1",
     "typescript": "^4.8.4",
     "ws": "^8.8.1"
@@ -49,9 +50,15 @@
     "@types/ws": "^8.5.3",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
+    "@types/parse-json": "^4.0.0",
+    "@types/react": "^18.0.34",
+    "@types/react-is": "^17.0.3",
+    "@types/react-transition-group": "^4.4.5",
+    "@types/prop-types": "^15.7.5",
+    "@types/scheduler": "^0.16.3",
     "chai": "^4.3.6",
     "eslint": "^8.25.0",
-    "mocha": "^10.0.0",
+    "mocha": "^10.1.0",
     "nyc": "^15.1.0",
     "prettier": "^2.7.1",
     "sinon": "^14.0.0",

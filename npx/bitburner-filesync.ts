@@ -1,4 +1,4 @@
-#!/usr/bin/env -S node --experimental-specifier-resolution=node
-import { start } from "../src/index";
+#!/usr/bin/env -S node
+import { start } from "../src/index.js";
 
 await start();
