@@ -4,6 +4,7 @@ import { config } from "../config.js";
 import { EventType } from "../eventTypes.js";
 import { Message } from "../interfaces.js";
 import { messageTracker } from "./messageTracker.js";
+import { ping } from "./messageGenerators.js";
 
 export function setupSocket(signaller: Signal) {
   const wss = new WebSocketServer({ port: config.get("port") });
@@ -23,6 +24,10 @@ export function setupSocket(signaller: Signal) {
     });
 
     signaller.trigger(EventType.ConnectionMade);
+
+    setInterval(() => {
+      sendMessage(ping());
+    }, 10000);
   });
 
   return wss;

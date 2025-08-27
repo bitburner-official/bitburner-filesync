@@ -49,6 +49,14 @@ export function requestFilenames(): Message {
   };
 }
 
+export function ping(): Message {
+  return {
+    jsonrpc: "2.0",
+    method: "ping",
+    id: messageCounter++,
+  };
+}
+
 function addLeadingSlash(path: string): string {
   const slashes = path.match("/");
   if (slashes) return `/${path}`;
