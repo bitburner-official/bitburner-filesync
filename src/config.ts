@@ -14,6 +14,13 @@ export const config = convict({
     default: false,
     arg: "allowDeletingFiles",
   },
+  host: {
+    doc: "The host to bind to.",
+    format: "String",
+    nullable: true,
+    default: null,
+    arg: "host",
+  },
   port: {
     doc: "The port to bind to.",
     format: "Number",

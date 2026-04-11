@@ -6,7 +6,8 @@ import { Message } from "../interfaces.js";
 import { messageTracker } from "./messageTracker.js";
 
 export function setupSocket(signaller: Signal) {
-  const wss = new WebSocketServer({ port: config.get("port") });
+  const configHost: string | null = config.get("host");
+  const wss = new WebSocketServer({ port: config.get("port"), host: configHost ?? undefined });
 
   wss.on("connection", function connection(ws) {
     function sendMessage(msg: Message) {
