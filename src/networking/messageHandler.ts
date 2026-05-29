@@ -43,14 +43,20 @@ export function messageHandler(signaller: Signal, data: RawData, paths: Map<stri
   }
 
   switch (incoming.method) {
-    case "getDefinitionFile":
+    case "getDefinitionFile": {
       if (typeof incoming.result !== "string") return console.log("Malformed data received.");
 
-      writeFile(config.get("definitionFile").location, incoming.result, (err) => {
+      let result = incoming.result;
+      if (config.get("definitionFile").ambient) {
+        result = result.replace(/export /g, "");
+      }
+
+      writeFile(config.get("definitionFile").location, result, (err) => {
         if (err) return console.log(err);
       });
 
       break;
+    }
     case "getFileNames": {
       if (!Array.isArray(incoming.result) || !isStringArray(incoming.result))
         return console.log("Malformed data received.");

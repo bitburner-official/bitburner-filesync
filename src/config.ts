@@ -60,6 +60,12 @@ export const config = convict({
       env: "BB_LOCATION_DEF",
       default: "./NetScriptDefinitions.d.ts",
     },
+    ambient: {
+      doc: "Modify the definition file like the in-game editor does.",
+      format: "Boolean",
+      env: "BB_AMBIENT_DEF",
+      default: false,
+    },
   },
   pushAllOnConnection: {
     doc: "Push all files when initial connection is made.",
