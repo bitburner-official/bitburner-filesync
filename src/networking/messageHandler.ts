@@ -48,7 +48,7 @@ export function messageHandler(signaller: Signal, data: RawData, paths: Map<stri
 
       let result = incoming.result;
       if (config.get("definitionFile").ambient) {
-        result = result.replace(/export /g, "");
+        result = result.replace(/^export /gm, "");
       }
 
       writeFile(config.get("definitionFile").location, result, (err) => {
