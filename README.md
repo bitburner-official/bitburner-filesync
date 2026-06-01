@@ -35,9 +35,9 @@ Here's an example of it's contents:
   "dry": false,
   "definitionFile": {
     "update": false,
-    "location": "NetScriptDefinitions.d.ts"
+    "location": "NetScriptDefinitions.d.ts",
+    "ambient": true
   },
-  "pushAllOnConnection": false,
-  "ambient": true
+  "pushAllOnConnection": false
 }
 ```
