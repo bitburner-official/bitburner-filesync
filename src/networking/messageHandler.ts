@@ -47,7 +47,7 @@ export function messageHandler(signaller: Signal, data: RawData, paths: Map<stri
       if (typeof incoming.result !== "string") return console.log("Malformed data received.");
 
       let result = incoming.result;
-      if (config.get("definitionFile").ambient) {
+      if (config.get("definitionFile").removeExportFromDeclarations) {
         result = result.replace(/^export /gm, "");
       }
 

@@ -60,8 +60,8 @@ export const config = convict({
       env: "BB_LOCATION_DEF",
       default: "./NetScriptDefinitions.d.ts",
     },
-    ambient: {
-      doc: "Modify the definition file like the in-game editor does.",
+    removeExportFromDeclarations: {
+      doc: "Remove `export` from definition file declarations to use Netscript types and functions without an `import`, like the in-game editor.",
       format: "Boolean",
       env: "BB_AMBIENT_DEF",
       default: false,
