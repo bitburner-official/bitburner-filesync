@@ -36,7 +36,7 @@ Here's an example of it's contents:
   "definitionFile": {
     "update": false,
     "location": "NetScriptDefinitions.d.ts",
-    "ambient": true
+    "removeExportFromDeclarations": false
   },
   "pushAllOnConnection": false
 }
