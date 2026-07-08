@@ -60,6 +60,12 @@ export const config = convict({
       env: "BB_LOCATION_DEF",
       default: "./NetScriptDefinitions.d.ts",
     },
+    removeExportFromDeclarations: {
+      doc: "Remove `export` from definition file declarations to use Netscript types and functions without an `import`, like the in-game editor.",
+      format: "Boolean",
+      env: "BB_REMOVE_EXPORT_FROM_DECLARATIONS",
+      default: false,
+    },
   },
   pushAllOnConnection: {
     doc: "Push all files when initial connection is made.",
