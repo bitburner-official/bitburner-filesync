@@ -63,7 +63,7 @@ export const config = convict({
     removeExportFromDeclarations: {
       doc: "Remove `export` from definition file declarations to use Netscript types and functions without an `import`, like the in-game editor.",
       format: "Boolean",
-      env: "BB_AMBIENT_DEF",
+      env: "BB_REMOVE_EXPORT_FROM_DECLARATIONS",
       default: false,
     },
   },
