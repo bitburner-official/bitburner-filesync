@@ -56,7 +56,8 @@ export async function start() {
       signal.emit(EventType.MessageSend, fileRemovalEventToMsg(fileEvent)),
     );
 
-  console.log(`Server is ready, running on ${config.get("port")}!`);
+  const configHost = config.get("host");
+  console.log(`Server is ready, running on ${configHost != null ? configHost + ":" : ""}${config.get("port")}!`);
 
   process.on("SIGINT", function () {
     console.log("Shutting down!");
